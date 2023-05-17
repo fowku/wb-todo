@@ -1,0 +1,42 @@
+{
+  "explorer.confirmDelete": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDragAndDrop": false,
+  "breadcrumbs.enabled": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "stylelint.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.alwaysShowStatus": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescriptreact",
+    "typescript"
+  ],
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "less"
+  ],
+  "typescript.reportStyleChecksAsWarnings": false,
+  "typescript.format.enable": false,
+  "javascript.validate.enable": false,
+  "javascript.format.enable": false,
+  "files.eol": "\n",
+  "less.lint.vendorPrefix": "error",
+  "workbench.iconTheme": "simple-icons",
+  "git.confirmSync": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "eslint.migration.2_x": "off",
+  "files.associations": {},
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "editor.copyWithSyntaxHighlighting": false
+}
