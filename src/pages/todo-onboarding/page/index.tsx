@@ -9,7 +9,7 @@ const BLOCK_NAME = 'TodoPage';
 
 export const Page = memo(() => (
   <div className={cn(BLOCK_NAME)} data-page="todo-page">
-    <div className={cn(`${BLOCK_NAME}__todo-wrapper`)}>
+    <div className={cn(`${BLOCK_NAME}__todoWrapper`)}>
       <ConnectedTodo />
     </div>
   </div>

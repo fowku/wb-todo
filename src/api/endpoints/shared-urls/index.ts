@@ -1,11 +1,8 @@
-export const ENDPOINT_EU_PORTAL_DEV = '';
-// export const ENDPOINT_EU_PORTAL_PROD = process.env.ENDPOINT_EU_PORTAL;
-export const ENDPOINT_EU_PORTAL_PROD =
-  'http://suppliers.suppliers-portal-eu.svc.k8s.test';
+import { ENDPOINT_PORTAL_DEV, ENDPOINT_PORTAL_PROD } from './urls';
 
-export const getPortalEuEndpoint = (): string =>
+export const getPortalEndpoint = (): string =>
   process.env.NODE_ENV !== 'production'
-    ? ENDPOINT_EU_PORTAL_DEV
-    : ENDPOINT_EU_PORTAL_PROD;
+    ? ENDPOINT_PORTAL_DEV
+    : ENDPOINT_PORTAL_PROD;
 
-export const translationsEndpoint = `${getPortalEuEndpoint()}/I18N`;
+export const translationsEndpoint = `${getPortalEndpoint()}/I18N`;
