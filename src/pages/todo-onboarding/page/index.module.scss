@@ -1,16 +1,13 @@
-@import "@wildberries/ui-kit/lib/styles/constants.module.scss";
-@import "@wildberries/ui-kit/lib/styles/media.module.scss";
-
 .TodoPage {
-  align-items: center;
   background-color: #e5e5e5;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
+  justify-content: center;
 
-  &__todo-wrapper {
+  &__todoWrapper {
     box-sizing: border-box;
+    display: flex;
     flex-grow: 1;
     max-width: 800px;
     padding: 32px;

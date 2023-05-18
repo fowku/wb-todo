@@ -18,6 +18,11 @@
     }
   }
 
+  &--loading {
+    opacity: .5;
+    pointer-events: none;
+  }
+
   &--editing {
     #{$root}__actions {
       opacity: 1;

@@ -1,47 +1,80 @@
+import { Component } from 'react';
+import { connect } from 'react-redux';
 import { SimpleInputChangeEventType } from '@wildberries/ui-kit';
-import { PureComponent } from 'react';
+import {
+  TodoStatePartType,
+  addTaskActionSaga,
+  editTaskActionSaga,
+  removeTaskActionSaga,
+  setNewTodoValueAction,
+  todoIsLoadingSelector,
+  todoNewValueSelector,
+  todoTasksSelector,
+  todoUpdatingItemsSelector,
+} from '@/pages/todo-onboarding/_redux/todo-module';
+import { TaskType } from '../../_types';
 import { TodoView } from './_components/todo-view';
 import { sortTasks } from './_utils';
 
-// TODO: use redux
-
 type PropsType = {
-  newTodoItemValue?: string;
-  onChangeNewTodoItemValue?: (newValue: SimpleInputChangeEventType) => void;
+  todoTasks: ReturnType<typeof todoTasksSelector>;
+  areTasksLoading: ReturnType<typeof todoIsLoadingSelector>;
+  newTodoItemValue: ReturnType<typeof todoNewValueSelector>;
+  addNewTodoItem: typeof addTaskActionSaga;
+  updatingTodoItems: ReturnType<typeof todoUpdatingItemsSelector>;
+  setNewTodoItemValue: typeof setNewTodoValueAction;
+  editTodoItem: typeof editTaskActionSaga;
+  removeTodoItem: typeof removeTaskActionSaga;
 };
 
-const TASKS = [
-  {
-    id: '1',
-    isCompleted: true,
-    data: 'aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa aaaaa ',
-  },
-  {
-    id: '2',
-    isCompleted: false,
-    data: 'bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb bbbbb ',
-  },
-  {
-    id: '3',
-    isCompleted: true,
-    data: 'ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ccccc ',
-  },
-  {
-    id: '4',
-    isCompleted: false,
-    data: 'ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ddddd ',
-  },
-];
+export class WrappedContainer extends Component<PropsType> {
+  handleClickAddButton = () => {
+    this.props.addNewTodoItem(this.props.newTodoItemValue);
+  };
 
-// TODO: rename to WrappedContainer
-export class ConnectedTodo extends PureComponent<PropsType> {
+  handleNewTodoItemChange = (event: SimpleInputChangeEventType) => {
+    this.props.setNewTodoItemValue(event.value);
+  };
+
+  handleChangeTodoItem = (task: TaskType) => {
+    this.props.editTodoItem(task);
+  };
+
+  handleRemoveTodoItem = (id: TaskType['id']) => {
+    this.props.removeTodoItem(id);
+  };
+
   render() {
     return (
       <TodoView
-        newItemValue={this.props.newTodoItemValue ?? ''}
-        onChangeNewTodoItemValue={this.props.onChangeNewTodoItemValue}
-        tasks={sortTasks(TASKS)} // TODO: use redux
+        areTasksLoading={this.props.areTasksLoading}
+        loadingItems={this.props.updatingTodoItems}
+        newItemValue={this.props.newTodoItemValue}
+        onChangeNewTodoItemValue={this.handleNewTodoItemChange}
+        onChangeTodoItem={this.handleChangeTodoItem}
+        onClickAddButton={this.handleClickAddButton}
+        onRemoveTodoItem={this.handleRemoveTodoItem}
+        tasks={sortTasks(this.props.todoTasks)}
       />
     );
   }
 }
+
+const mapStateToProps = (state: TodoStatePartType) => ({
+  todoTasks: todoTasksSelector(state),
+  areTasksLoading: todoIsLoadingSelector(state),
+  newTodoItemValue: todoNewValueSelector(state),
+  updatingTodoItems: todoUpdatingItemsSelector(state),
+});
+
+const mapDispatchToProps = {
+  setNewTodoItemValue: setNewTodoValueAction,
+  addNewTodoItem: addTaskActionSaga,
+  editTodoItem: editTaskActionSaga,
+  removeTodoItem: removeTaskActionSaga,
+};
+
+export const ConnectedTodo = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WrappedContainer);
